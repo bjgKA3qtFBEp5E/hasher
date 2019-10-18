@@ -2,9 +2,9 @@
 #include "sodium.h"
 #include "hash_backend.h"
 
-#define DUMMY_BACKEND_NAME "SodiumHashBackend"
+#define SODIUM_BACKEND_NAME "SodiumHashBackend"
 
-static int dummy_hash(
+static int sodium_backend_hash(
     unsigned char *out, size_t outlen, const unsigned char *in,
     unsigned long long inlen
 ) {
@@ -15,10 +15,12 @@ int get_hash_backend(struct HashBackend *backend) {
     if (sodium_init() < 0) {
         return EHASH_BACKEND_INIT_FAILED;
     }
+
     *backend = (struct HashBackend) {
-        .name=DUMMY_BACKEND_NAME,
-        .hashfn=dummy_hash,
+        .name=SODIUM_BACKEND_NAME,
+        .hashfn=sodium_backend_hash,
         .hashlen=crypto_generichash_BYTES
     };
+
     return 0;
 }

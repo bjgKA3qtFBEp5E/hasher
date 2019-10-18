@@ -3,7 +3,8 @@
 
 #define EHASH_BACKEND_INIT_FAILED -1
 
-typedef int (*HashFn) (unsigned char *out, size_t outlen, const unsigned char *in, unsigned long long inlen);
+typedef int (*HashFn) (unsigned char *out, size_t outlen,
+                          const unsigned char *in, unsigned long long inlen);
 
 struct HashBackend {
     const char *name;

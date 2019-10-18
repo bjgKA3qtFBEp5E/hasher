@@ -4,7 +4,8 @@
 
 #define DUMMY_BACKEND_NAME "DummyHashBackend"
 
-int dummy_hash(unsigned char *out, size_t outlen, const unsigned char *in, unsigned long long inlen) {
+int dummy_hash(unsigned char *out, size_t outlen,
+                const unsigned char *in, unsigned long long inlen) {
     memcpy(out, in, outlen);
     return 0;
 }

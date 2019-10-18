@@ -4,6 +4,7 @@ project (Hasher)
 option(USE_DUMMY "Use Dummy" ON)
 option(USE_SODIUM "Use Sodium" OFF)
 
+enable_testing()
 
 if(USE_SODIUM)
     set(BACKEND sodium)

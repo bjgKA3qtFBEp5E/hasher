@@ -21,15 +21,15 @@ static void print_version() {
     );
 }
 
-static void print_hash(char *input) {
+static void print_hash(const unsigned char *input, unsigned long long inlen) {
     struct HashBackend backend;
 
     if (get_hash_backend(&backend) == EHASH_BACKEND_INIT_FAILED) {
         fprintf(stderr, "Failed to initialize hash backend.\n");
     } else {
-        char output[backend.hashlen]; //TODO: explain variable arrays need
-        backend.hashfn(output, backend.hashlen, input, strlen(input));
-        printf("%s\n", output);
+        unsigned char output[backend.hashlen];
+        backend.hashfn(output, backend.hashlen, input, inlen);
+        printf("%s", output);
     }
 }
 
@@ -40,7 +40,7 @@ int main(int argc, char *argv[]) {
     } else if (strcmp(ARG_VERSION, argv[1]) == 0) {
         print_version();
     } else {
-        print_hash(argv[1]);
+        print_hash((const unsigned char *)argv[1], strlen(argv[1]));
     }
 
     return 0;

@@ -13,7 +13,12 @@ static void print_usage(char *bin) {
 }
 
 static void print_version() {
-    printf("%d.%d\n", HASHER_VERSION_MAJOR, HASHER_VERSION_MINOR);
+    struct HashBackend backend = { .name = "N/A" };
+    get_hash_backend(&backend);
+
+    printf("Hasher v%d.%d\nUsing %s\n",
+        HASHER_VERSION_MAJOR, HASHER_VERSION_MINOR, backend.name
+    );
 }
 
 static void print_hash(char *input) {

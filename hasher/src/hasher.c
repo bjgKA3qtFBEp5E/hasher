@@ -6,9 +6,10 @@
 
 #define HASHER_VERSION_MAJOR 0
 #define HASHER_VERSION_MINOR 1
+#define HASHER_USAGE "Usage: %s [--version] [STRING]\n"
 
 static void print_usage(char *bin) {
-    printf("usage: %s string\n", bin);
+    printf(HASHER_USAGE, bin);
 }
 
 static void print_version() {

@@ -1,6 +1,8 @@
 #ifndef _HASH_BACKEND_H_
 #define _HASH_BACKEND_H_
 
+#include <stddef.h>
+
 #define EHASH_BACKEND_INIT_FAILED -1
 
 typedef int (*HashFn) (unsigned char *out, size_t outlen,

@@ -1,8 +1,6 @@
 cmake_minimum_required(VERSION 3.2)
 project (Hasher)
 
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
-
 option(USE_DUMMY "Use Dummy" ON)
 option(USE_SODIUM "Use Sodium" OFF)
 
@@ -15,4 +13,4 @@ elseif(USE_DUMMY)
     add_subdirectory(dummy-backend)
 endif()
 
-add_subdirectory (hasher)
+add_subdirectory(hasher)

@@ -20,8 +20,11 @@ if(NOT LIBSODIUM_PREFIX)
     set(LIBSODIUM_CONFIGURE_COMMAND ./configure --disable-shared --prefix ${LIBSODIUM_PREFIX})
 
     if(ANDROID_TOOLCHAIN)
+        if(ANDROID_ABI STREQUAL armeabi-v7a)
+            set(EABI eabi)
+        endif()
         string(REPLACE "-" "" MAKE_ARCH ${CMAKE_SYSTEM_PROCESSOR})
-        set(SODIUM_CC ${ANDROID_TOOLCHAIN_ROOT}/bin/${MAKE_ARCH}-linux-androideabi${ANDROID_PLATFORM_LEVEL}-clang)
+        set(SODIUM_CC ${ANDROID_TOOLCHAIN_ROOT}/bin/${MAKE_ARCH}-linux-android${EABI}${ANDROID_PLATFORM_LEVEL}-clang)
         set(LIBSODIUM_CONFIGURE_COMMAND CC=${SODIUM_CC} ${LIBSODIUM_CONFIGURE_COMMAND} --host armv7a-linux-androideabi)
     endif()
 

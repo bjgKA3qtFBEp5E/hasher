@@ -9,9 +9,9 @@ int dummy_hash(unsigned char *out, size_t outlen, const unsigned char *in, unsig
     return 0;
 }
 
-struct HashBackend get_hash_backend(void) {
-        struct HashBackend backend = {
+int get_hash_backend(struct HashBackend *backend) {
+        *backend = (struct HashBackend) {
             .name=DUMMY_BACKEND_NAME, .hashfn=dummy_hash, .hashlen=20
         };
-        return backend;
+        return 0;
 }

@@ -17,11 +17,15 @@ static void print_version() {
 }
 
 static void print_hash(char *input) {
-    struct HashBackend backend = get_hash_backend();
+    struct HashBackend backend;
 
-    char output[backend.hashlen]; //TODO: explain variable arrays need
-    backend.hashfn(output, backend.hashlen, input, strlen(input));
-    printf("%s\n", output);
+    if (get_hash_backend(&backend) == EHASH_BACKEND_INIT_FAILED) {
+        fprintf(stderr, "Failed to initialize hash backend.\n");
+    } else {
+        char output[backend.hashlen]; //TODO: explain variable arrays need
+        backend.hashfn(output, backend.hashlen, input, strlen(input));
+        printf("%s\n", output);
+    }
 }
 
 int main(int argc, char *argv[]) {

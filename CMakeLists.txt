@@ -8,10 +8,12 @@ enable_testing()
 
 if(USE_SODIUM)
     set(BACKEND sodium)
-    add_subdirectory(sodium-backend)
 elseif(USE_DUMMY)
     set(BACKEND dummy)
-    add_subdirectory(dummy-backend)
 endif()
 
+set(HASHER_TEST_FW ../test)
+
+add_subdirectory(${BACKEND}-backend)
 add_subdirectory(hasher)
+add_subdirectory(test)

@@ -10,6 +10,7 @@ Spec(HashBackend, {
         before_each({
             get_backend_result = get_hash_backend(&backend);
         })
+        after_each({})
 
         it("gets backend", {
             assert_int_equals(0, get_backend_result);

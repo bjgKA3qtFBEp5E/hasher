@@ -1,4 +1,3 @@
-cmake_minimum_required(VERSION 3.2)
 project(sodium-backend)
 
 set(HASHER_INCLUDE_DIRS ../hasher/src)

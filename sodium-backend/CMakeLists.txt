@@ -51,3 +51,12 @@ set_target_properties(libsodium PROPERTIES IMPORTED_LOCATION ${LIBSODIUM_LIB_DIR
 add_dependencies(sodium-backend libsodium)
 
 target_link_libraries(sodium-backend PRIVATE libsodium)
+
+
+# test config
+
+include_directories(${HASHER_TEST_FW})
+add_executable(hash_backend_test test/hash_backend_test.c)
+target_link_libraries(hash_backend_test ${BACKEND}-backend)
+
+add_test(SodiumBackendTests hash_backend_test)

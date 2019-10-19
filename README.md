@@ -14,14 +14,27 @@ build options.
 - The chosen backend is the only one going to be linked to the binary
 during build, other backends will not be built.
 
+## Requirements
+
+Tested with:
+
+- cmake 3.13.4
+- GNU C Compiler 9.2.1
+- libsodium 1.0.17
+- Android NDK r18b
+
 ## Build
 
 The project is based on cmake and the following options are available:
 
 - `USE_SODIUM` instructs the project to use sodium backend. If not specified a dummy backend will be used.
-- `LIBSODIUM_PREFIX` specify prefix to use prebuilt libsodium and header from. If not specified, libsodium will be downloaded and built.
+- `LIBSODIUM_PREFIX` specify prefix to use a prebuilt libsodium and header
+from. If not specified, libsodium will be downloaded and built.
+
+After a successful build, the binary `build/bin/hasher` is created.
 
 ### Build for local host
+
 ```
 mkdir build && cd build
 cmake .. -DUSE_SODIUM=yes
@@ -39,7 +52,7 @@ cmake .. \
 
 - Replace `$NDK` or set it to local path to Android NDK.
 - Replace `$ABI` or set it to target ABI [arm, x86]
-- Replace `$MINSDKVERION` or set it to desired value
+- Replace `$MINSDKVERSION` or set it to desired value, example: `android-23`
 
 ## Testing
 
@@ -70,7 +83,7 @@ is not hashable.
 
 ### Backend versions
 
-The argument `--version` only prints Hasher version and name of backend that
+The argument `--version` only prints hasher version and name of backend that
 was built in. It would be useful if backends are able to specify their versions which would also be included in the output from `hasher --version`.
 
 ### libsodium auto find

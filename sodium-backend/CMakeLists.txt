@@ -12,7 +12,7 @@ if(NOT LIBSODIUM_PREFIX)
     include(ExternalProject)
 
     set(LIBSODIUM_NAME libsodium)
-    set(LIBSODIUM_VERSION "1.0.18")
+    set(LIBSODIUM_VERSION "1.0.17")
     set(LIBSODIUM_NAME_VERSION ${LIBSODIUM_NAME}-${LIBSODIUM_VERSION})
     set(LIBSODIUM_URL https://download.libsodium.org/libsodium/releases/${LIBSODIUM_NAME_VERSION}.tar.gz)
     set(LIBSODIUM_PREFIX "${CMAKE_CURRENT_BINARY_DIR}/deps/${LIBSODIUM_NAME_VERSION}")
@@ -20,12 +20,21 @@ if(NOT LIBSODIUM_PREFIX)
     set(LIBSODIUM_CONFIGURE_COMMAND ./configure --disable-shared --prefix ${LIBSODIUM_PREFIX})
 
     if(ANDROID_TOOLCHAIN)
-        if(ANDROID_ABI STREQUAL armeabi-v7a)
+
+        if(ANDROID_ABI STREQUAL arm)
             set(EABI eabi)
         endif()
+
+        set(LIBSODIUM_TOOLCHAIN_DIR ${CMAKE_CURRENT_BINARY_DIR}/toolchain)
+
         string(REPLACE "-" "" MAKE_ARCH ${CMAKE_SYSTEM_PROCESSOR})
-        set(SODIUM_CC ${ANDROID_TOOLCHAIN_ROOT}/bin/${MAKE_ARCH}-linux-android${EABI}${ANDROID_PLATFORM_LEVEL}-clang)
-        set(LIBSODIUM_CONFIGURE_COMMAND CC=${SODIUM_CC} ${LIBSODIUM_CONFIGURE_COMMAND} --host armv7a-linux-androideabi)
+
+        set(SODIUM_CC ${LIBSODIUM_TOOLCHAIN_DIR}/bin/${MAKE_ARCH}-linux-android${EABI}-clang)
+
+        # TODO --host is not proper
+        set(LIBSODIUM_CONFIGURE_COMMAND CC=${SODIUM_CC} ${LIBSODIUM_CONFIGURE_COMMAND} --host ${ANDROID_ABI}-linux-androideabi)
+
+        set(ANDROID_TOOLCHAIN_CONFIGURE_COMMAND ${ANDROID_NDK}/build/tools/make_standalone_toolchain.py --arch ${ANDROID_ABI} --api ${ANDROID_PLATFORM_LEVEL} --install-dir ${LIBSODIUM_TOOLCHAIN_DIR})
     endif()
 
     ExternalProject_Add(LibSodiumDownload
@@ -33,7 +42,7 @@ if(NOT LIBSODIUM_PREFIX)
       UPDATE_COMMAND ""
       PREFIX ${LIBSODIUM_PREFIX}
       BUILD_IN_SOURCE 1
-      CONFIGURE_COMMAND ${LIBSODIUM_CONFIGURE_COMMAND}
+      CONFIGURE_COMMAND ${ANDROID_TOOLCHAIN_CONFIGURE_COMMAND} COMMAND ${LIBSODIUM_CONFIGURE_COMMAND}
       INSTALL_COMMAND make install
     )
 endif()

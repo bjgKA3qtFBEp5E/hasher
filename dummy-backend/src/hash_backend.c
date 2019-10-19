@@ -11,8 +11,8 @@ int dummy_hash(unsigned char *out, size_t outlen,
 }
 
 int get_hash_backend(struct HashBackend *backend) {
-        *backend = (struct HashBackend) {
-            .name=DUMMY_BACKEND_NAME, .hashfn=dummy_hash, .hashlen=20
-        };
-        return 0;
+    *backend = (struct HashBackend) {
+        .name=DUMMY_BACKEND_NAME, .hashfn=dummy_hash, .hashlen=20
+    };
+    return 0;
 }
